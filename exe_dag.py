@@ -109,17 +109,18 @@ class ExeDag(object):
                         self.wait_to_ready()
                 else:
                     fail_node = worker.get_cur_node()
-                    chance = fail_node.get_retry_times()
-                    if chance <= 0:
-                        self.fail_queue.put(fail_node)
-                        worker.clean()
-                    else:
-                        if chance == self.retry_times:
-                            new_cmd = 'sleep ' + str(self.retry_span) + ';' + fail_node.get_cmd()
-                            fail_node.set_cmd(new_cmd)
-                        logging.debug("COMMAND:" + fail_node.get_cmd())
-                        fail_node.set_retry_times(chance - 1)
-                        worker.execute(fail_node)
+                    if fail_node:
+                        chance = fail_node.get_retry_times()
+                        if chance <= 0:
+                            self.fail_queue.put(fail_node)
+                            worker.clean()
+                        else:
+                            if chance == self.retry_times:
+                                new_cmd = 'sleep ' + str(self.retry_span) + ';' + fail_node.get_cmd()
+                                fail_node.set_cmd(new_cmd)
+                            logging.debug("COMMAND:" + fail_node.get_cmd())
+                            fail_node.set_retry_times(chance - 1)
+                            worker.execute(fail_node)
 
                 # 从上游队列请求任务
                 if not self.ready_queue.empty():
@@ -145,7 +146,8 @@ class ExeDag(object):
                 else:
                     self.show_queues()
                     return 1
-            self.show_queues()
+            if clock % 60 == 0:
+                self.show_queues()
             time.sleep(1)
 
     def show_queues(self):
