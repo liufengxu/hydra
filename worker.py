@@ -5,8 +5,8 @@ import logging
 FREE = 0
 BUSY = 1
 
-logging.basicConfig(filename="test.log", filemode="w", format="%(asctime)s %(name)s:%(levelname)s:%(message)s",
-                    datefmt="%d-%M-%Y %H:%M:%S", level=logging.INFO)
+# logging.basicConfig(filename="test.log", filemode="w", format="%(asctime)s %(name)s:%(levelname)s:%(message)s",
+#                     datefmt="%d-%m-%Y %H:%M:%S", level=logging.INFO)
 
 
 class ShellWorker(object):
