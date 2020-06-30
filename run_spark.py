@@ -6,7 +6,7 @@ import subprocess
 import exe_dag
 
 SPARK_CMD_INFO = 'sudo -iu hadoop /usr/local/spark/bin/spark-sql ' + \
-    '-S --deploy-mode client --name portrait_system --queue root.ai.customer.offline'
+    '-S --deploy-mode client --name xxxxxxxxxxx --queue xxxxxxxxxx'
 
 print(SPARK_CMD_INFO)
 def gen_date_n_before(end_dt, days):
