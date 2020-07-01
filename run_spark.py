@@ -57,8 +57,8 @@ def gen_from_model(model_file, start_date, end_date):
                         dep_tail = back
                     else:
                         dep_tail = back + '_' + dt
-                    dep = dep_head + '<<' + dep_tail
-                conf_fp.write(dep)
+                    dep = dep_head + '<<' + dep_tail + '\n'
+                    conf_fp.write(dep)
                 cmd_set.add(front)
                 cmd_set.add(back)
     conf_fp.close()
@@ -79,11 +79,11 @@ def run_daily(model_file):
     yesterday = (today + datetime.timedelta(days=-1)).strftime("%Y-%m-%d")
     conf_file, cmd_file = gen_from_model(model_file, yesterday, yesterday)
     retcode = execute_task(conf_file, cmd_file)
-    print(retcode)
+    return retcode
 
 
 def run_history(model_file, start_date, end_date, task_num=3):
     conf_file, cmd_file = gen_from_model(model_file, start_date, end_date)
     retcode = execute_task(conf_file, cmd_file, task_num)
-    print(retcode)
+    return retcode
 
